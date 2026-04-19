@@ -51,7 +51,7 @@ export default function FeedbackPortal() {
             <div className="col-span-8 flex flex-col h-full">
               <div className="bg-white border border-white rounded-[40px] p-10 shadow-xl shadow-slate-200/40 flex-1 flex flex-col">
                 
-                <div className="space-y-8 flex-1">
+                <div className="space-y-8">
                   
                   {/* Module Selection */}
                   <div className="space-y-3">
@@ -111,7 +111,7 @@ export default function FeedbackPortal() {
                   </div>
 
                   {/* Detailed Observations */}
-                  <div className="space-y-3 flex-1 flex flex-col h-full min-h-[240px]">
+                  <div className="space-y-3">
                     <div className="flex items-center justify-between">
                       <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Detailed Observations</label>
                       <div className="flex items-center gap-1.5 text-slate-400">
@@ -119,15 +119,16 @@ export default function FeedbackPortal() {
                         <span className="text-[10px] font-bold">Markdown supported</span>
                       </div>
                     </div>
+                    {/* Height increased to 200px */}
                     <textarea 
                       placeholder="Describe specific module strengths, weaknesses, or student engagement levels..."
-                      className="w-full flex-1 bg-[#F8FAFC] border-2 border-slate-100 rounded-[24px] p-6 text-[14px] font-medium text-slate-700 focus:outline-none focus:border-[#2563EB] focus:bg-white focus:shadow-md transition-all duration-300 placeholder:text-slate-400 resize-none"
+                      className="w-full h-[200px] bg-[#F8FAFC] border-2 border-slate-100 rounded-[24px] p-6 text-[14px] font-medium text-slate-700 focus:outline-none focus:border-[#2563EB] focus:bg-white focus:shadow-md transition-all duration-300 placeholder:text-slate-400 resize-none"
                     ></textarea>
                   </div>
                 </div>
 
-                {/* Footer Actions */}
-                <div className="flex items-center justify-between pt-8 border-t border-slate-100 mt-8 shrink-0">
+                {/* Footer Actions - Brought up directly below the text area */}
+                <div className="flex items-center justify-between pt-8 border-t border-slate-100 mt-8">
                   <div className="flex items-center gap-2.5 text-[#10B981] bg-emerald-50 px-4 py-2 rounded-xl">
                     <CheckCircle2 size={16} />
                     <span className="text-[10px] font-black uppercase tracking-widest">Draft saved 2m ago</span>

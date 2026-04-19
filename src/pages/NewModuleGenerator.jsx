@@ -32,7 +32,7 @@ export default function NewModuleGenerator() {
               </div>
               
               <h1 className="text-[40px] font-black leading-none tracking-tighter text-[#0F172A] mb-4">
-                Generate Future-Ready Modules
+                Future-Ready Module Generated For You
               </h1>
               <p className="text-slate-500 text-[14px] font-medium leading-relaxed">
                 Leverage academic intelligence to scaffold new curriculum modules based on emerging industry trends and institutional requirements.

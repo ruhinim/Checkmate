@@ -1,7 +1,10 @@
 import React from 'react';
-import { Search, Bell, ChevronDown } from "lucide-react";
+import { useNavigate } from 'react-router-dom';
+import { Search, Bell, ChevronDown, Bookmark } from "lucide-react";
 
 export default function Topbar() {
+  const navigate = useNavigate();
+
   return (
     <div className="h-20 bg-white/95 backdrop-blur-sm border-b border-slate-100 flex items-center justify-between px-8 shrink-0 sticky top-0 z-10 w-full shadow-sm shadow-slate-100/30">
       
@@ -15,9 +18,18 @@ export default function Topbar() {
         />
       </div>
 
-      {/* RIGHT: Notifications & Refined Profile */}
-      <div className="flex items-center gap-6">
+      {/* RIGHT: Actions & Refined Profile */}
+      <div className="flex items-center gap-4">
         
+        {/* Saved Recommendations Icon */}
+        <button 
+          onClick={() => navigate('/saverecommendation')} 
+          className="relative p-2 rounded-xl text-slate-400 hover:text-[#2563EB] hover:bg-blue-50 transition-all group"
+          title="Saved Recommendations"
+        >
+          <Bookmark size={20} className="group-hover:scale-110 transition-transform" />
+        </button>
+
         {/* Notifications Icon with Indicator */}
         <button className="relative p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-50 transition-all group">
           <Bell size={20} className="group-hover:rotate-12 transition-transform" />
@@ -25,7 +37,7 @@ export default function Topbar() {
         </button>
         
         {/* Refined Profile Section */}
-        <div className="flex items-center gap-3.5 pl-6 border-l border-slate-100 cursor-pointer group">
+        <div className="flex items-center gap-3.5 pl-4 ml-2 border-l border-slate-100 cursor-pointer group">
           
           {/* Presence Avatar */}
           <div className="relative">

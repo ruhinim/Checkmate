@@ -5,6 +5,43 @@ import {
   TrendingUp, Target, Users, MessageSquare, 
   MoreVertical, ExternalLink, Activity
 } from "lucide-react";
+import { 
+  AreaChart, Area, XAxis, YAxis, CartesianGrid, 
+  Tooltip, ResponsiveContainer 
+} from 'recharts';
+
+// Realistic mock data for the chart
+const chartData = [
+  { name: 'CS101', current: 76, historical: 82 },
+  { name: 'CS102', current: 89, historical: 75 },
+  { name: 'CS201', current: 68, historical: 72 },
+  { name: 'CS202', current: 94, historical: 86 },
+  { name: 'CS301', current: 85, historical: 81 },
+  { name: 'CS302', current: 97, historical: 88 },
+  { name: 'CS304', current: 88, historical: 93 },
+];
+
+// Custom tooltip to match the premium UI
+const CustomTooltip = ({ active, payload, label }) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-white/95 backdrop-blur-sm border border-slate-100 p-4 rounded-2xl shadow-xl shadow-slate-200/50">
+        <p className="text-[12px] font-black text-slate-800 uppercase tracking-widest mb-3 border-b border-slate-50 pb-2">{label}</p>
+        <div className="space-y-2">
+          <div className="flex items-center gap-3">
+            <div className="w-2 h-2 rounded-full bg-[#2563EB]"></div>
+            <p className="text-[11px] font-bold text-slate-500">Current Cohort: <span className="text-[#0F172A] font-black">{payload[0].value}%</span></p>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="w-2 h-2 rounded-full bg-[#0D9488]"></div>
+            <p className="text-[11px] font-bold text-slate-500">Historical Avg: <span className="text-[#0F172A] font-black">{payload[1].value}%</span></p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  return null;
+};
 
 export default function StudentAnalytics() {
   return (
@@ -81,7 +118,7 @@ export default function StudentAnalytics() {
             
             {/* Performance Trends Chart */}
             <div className="col-span-8 bg-white border border-white rounded-[40px] p-8 shadow-xl shadow-slate-200/40 flex flex-col">
-              <div className="flex justify-between items-start mb-10 shrink-0">
+              <div className="flex justify-between items-start mb-6 shrink-0">
                 <div>
                   <h3 className="text-[20px] font-black text-[#0F172A] tracking-tight">Performance Trends</h3>
                   <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Course progression CS101 – CS304</p>
@@ -92,27 +129,60 @@ export default function StudentAnalytics() {
                 </div>
               </div>
               
-              {/* Simplified Visual Representation of the Line Chart */}
-              <div className="flex-1 min-h-[200px] relative flex items-end justify-between px-6 border-b-2 border-slate-50">
-                 {/* Grid Lines */}
-                 <div className="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-50">
-                    {[1,2,3,4].map(i => <div key={i} className="w-full border-t border-dashed border-slate-200"></div>)}
-                 </div>
-                 
-                 {/* Data Points */}
-                 {['CS101', 'CS102', 'CS201', 'CS202', 'CS301', 'CS302', 'CS304'].map((code, idx) => {
-                    // Stagger heights for a mock chart look
-                    const heights = ['h-[40%]', 'h-[60%]', 'h-[45%]', 'h-[75%]', 'h-[65%]', 'h-[85%]', 'h-[70%]'];
-                    return (
-                    <div key={idx} className={`flex flex-col items-center justify-end relative z-10 w-4 group ${heights[idx]}`}>
-                        <div className="absolute bottom-0 w-1 bg-gradient-to-t from-slate-100 to-transparent h-full -z-10 group-hover:from-blue-100 transition-colors"></div>
-                        <div className={`w-3 h-3 rounded-full border-2 border-white shadow-md mb-2 transition-transform group-hover:scale-150 ${idx % 2 === 0 ? 'bg-[#2563EB]' : 'bg-[#0D9488]'}`}></div>
-                        <span className="absolute -bottom-8 text-[10px] font-black text-slate-400 tracking-widest">{code}</span>
-                    </div>
-                 )})}
+              {/* RECHARTS AREA GRAPH */}
+              <div className="flex-1 min-h-[240px] w-full mt-4 -ml-4">
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={chartData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                    <defs>
+                      <linearGradient id="colorCurrent" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#2563EB" stopOpacity={0.2}/>
+                        <stop offset="95%" stopColor="#2563EB" stopOpacity={0}/>
+                      </linearGradient>
+                      <linearGradient id="colorHistorical" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#0D9488" stopOpacity={0.15}/>
+                        <stop offset="95%" stopColor="#0D9488" stopOpacity={0}/>
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
+                    <XAxis 
+                      dataKey="name" 
+                      axisLine={false} 
+                      tickLine={false} 
+                      tick={{ fill: '#94A3B8', fontSize: 10, fontWeight: 900, fontFamily: 'inherit' }}
+                      dy={10}
+                    />
+                    <YAxis 
+                      axisLine={false} 
+                      tickLine={false} 
+                      tick={{ fill: '#94A3B8', fontSize: 10, fontWeight: 900, fontFamily: 'inherit' }}
+                      domain={[40, 100]}
+                      dx={-10}
+                    />
+                    <Tooltip content={<CustomTooltip />} cursor={{ stroke: '#E2E8F0', strokeWidth: 2, strokeDasharray: '4 4' }} />
+                    <Area 
+                      type="monotone" 
+                      dataKey="historical" 
+                      stroke="#0D9488" 
+                      strokeWidth={3}
+                      fillOpacity={1} 
+                      fill="url(#colorHistorical)" 
+                      activeDot={{ r: 6, fill: '#0D9488', stroke: '#fff', strokeWidth: 3 }}
+                    />
+                    <Area 
+                      type="monotone" 
+                      dataKey="current" 
+                      stroke="#2563EB" 
+                      strokeWidth={4}
+                      fillOpacity={1} 
+                      fill="url(#colorCurrent)" 
+                      activeDot={{ r: 7, fill: '#2563EB', stroke: '#fff', strokeWidth: 3 }}
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
               </div>
 
-              <div className="flex justify-center gap-8 mt-12 pt-6 shrink-0">
+              {/* Legend */}
+              <div className="flex justify-center gap-8 pt-6 shrink-0 mt-4">
                 <div className="flex items-center gap-2">
                   <div className="w-2.5 h-2.5 rounded-full bg-[#2563EB] shadow-sm"></div>
                   <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Current Cohort Performance</span>

@@ -2,6 +2,7 @@ import React from 'react';
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
 import { ChevronDown, Rocket, Plus, Filter, LayoutGrid, List } from "lucide-react";
+import saved from '../assets/saved.jpg';
 
 export default function SavedRecommendations() {
   return (
@@ -198,10 +199,11 @@ const HealthStatsCard = () => (
       </div>
     </div>
 
-    {/* Graphic Background Fill */}
+    {/* Graphic Background Fill 
     <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-teal-200/40 to-transparent pointer-events-none">
-        <img src="https://i.imgur.com/vHqBNoo.png" alt="abstract-waves" className="w-full h-full object-cover opacity-30 mix-blend-multiply" />
+        <img src="#" alt="" className="w-full h-full object-cover opacity-30 mix-blend-multiply" />
     </div>
+    */}
   </div>
 );
 

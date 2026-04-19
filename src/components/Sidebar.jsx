@@ -145,10 +145,13 @@ export default function Sidebar() {
 
       {/* AI Assistant */}
       <div className="px-2 mt-6">
-        <div className="flex items-center justify-between px-4 py-3 rounded-xl bg-slate-50 hover:bg-white border border-slate-200 hover:shadow-md transition-all cursor-pointer">
+        <NavLink 
+          to="/chatmate" 
+          className="flex items-center justify-between px-4 py-3 rounded-xl bg-slate-50 hover:bg-white border border-slate-200 hover:shadow-md transition-all cursor-pointer group block"
+        >
           <div className="flex items-center gap-3">
             <div className="relative">
-              <div className="w-9 h-9 rounded-lg bg-[#2563eb]/10 flex items-center justify-center text-[#2563eb]">
+              <div className="w-9 h-9 rounded-lg bg-[#2563eb]/10 flex items-center justify-center text-[#2563eb] group-hover:bg-[#2563eb] group-hover:text-white transition-colors duration-300">
                 <Sparkles size={16} />
               </div>
               <div className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-green-500 rounded-full border border-white"></div>
@@ -163,7 +166,7 @@ export default function Sidebar() {
           </div>
 
           <span className="text-[11px] font-medium text-[#2563eb]">Open</span>
-        </div>
+        </NavLink>
       </div>
     </div>
   );
