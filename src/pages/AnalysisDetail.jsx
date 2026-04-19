@@ -2,200 +2,231 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
-import { ArrowLeft, ChevronRight } from "lucide-react";
+import { 
+  FileText, 
+  History, 
+  TrendingDown, 
+  ThumbsDown, 
+  Lightbulb, 
+  AlertTriangle,
+  Stethoscope
+} from "lucide-react";
 
 export default function AnalysisDetail() {
   const navigate = useNavigate();
 
-  // 🔥 DYNAMIC DATA (replace later)
-  const module = {
-    code: "CS302",
-    name: "Machine Learning",
-    score: 34,
-    gaps: 28,
-    outdated: 11,
-    match: 41
-  };
-
-  const isCritical = module.score < 50;
-
   return (
-    <div className="flex h-screen w-screen bg-[#F6F8FC] overflow-hidden">
+    <div className="flex h-screen w-screen bg-[#F8FAFC] overflow-hidden font-sans text-slate-900 relative">
+      
+      {/* Background Dot Texture */}
+      <div className="absolute inset-0 z-0 opacity-[0.5] pointer-events-none" 
+           style={{ backgroundImage: `radial-gradient(#CBD5E1 1px, transparent 1px)`, backgroundSize: '32px 32px' }}>
+      </div>
+
       <Sidebar />
 
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden z-10 relative">
         <Topbar />
 
-        <main className="flex-1 p-6 overflow-auto space-y-6">
+        <main className="flex-1 p-8 overflow-y-auto custom-scrollbar flex flex-col gap-6">
+          
+          {/* HEADER SECTION */}
+          <div className="flex justify-between items-start shrink-0">
+            <div className="max-w-3xl">
+              <span className="inline-block px-3 py-1 bg-red-100 text-red-600 text-[10px] font-black uppercase tracking-widest rounded-full mb-4">
+                Curriculum Audit v2.4 — At Risk
+              </span>
+              
+              <h1 className="text-4xl font-black tracking-tight text-slate-900 mb-3">
+                CS201 – Database Systems Analysis
+              </h1>
+              
+              <p className="text-sm text-slate-600 font-medium leading-relaxed max-w-2xl">
+                Critical audit reveals significant misalignment with modern distributed systems. 
+                Legacy focus on Relational-only architecture creates substantial readiness gaps for 
+                NoSQL and Cloud deployments.
+              </p>
+            </div>
 
-          {/* 🔥 BREADCRUMB */}
-          <div className="text-xs text-slate-400 font-semibold">
-            Modules / {module.code} / Analysis
+            <button className="px-6 py-4 bg-[#2563EB] hover:bg-blue-700 text-white rounded-[20px] font-black text-sm transition-all shadow-lg shadow-blue-500/30 flex items-center gap-3 mt-2">
+              <div className="text-left leading-tight">
+                <div className="font-bold text-blue-100 text-[10px] uppercase tracking-wider">View AI</div>
+                <div>Recovery Plan</div>
+              </div>
+              <Stethoscope size={24} />
+            </button>
           </div>
 
-          {/* 🔥 MODULE HEADER (NEXT LEVEL) */}
-          <div className={`relative rounded-[28px] p-7 shadow-md overflow-hidden
-            ${isCritical 
-              ? "bg-gradient-to-br from-red-500 via-red-600 to-red-700 text-white"
-              : "bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-600 text-white"}
-          `}>
+          {/* TOP GRID: DONUT (Left) + METRICS & BARS (Right) */}
+          <div className="grid grid-cols-12 gap-6 min-h-0 shrink-0">
+            
+            {/* LEFT: Alignment Score Donut */}
+            <div className="col-span-4 bg-white rounded-[32px] p-8 border border-white shadow-xl shadow-slate-200/40 flex flex-col items-center justify-center text-center">
+              <h3 className="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-8">
+                Industry Alignment Score
+              </h3>
+              
+              <div className="mb-8">
+                <Donut value={32} />
+              </div>
 
-            {/* Glow */}
-            <div className="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-2xl" />
+              <p className="text-xs text-slate-500 font-medium leading-relaxed px-4">
+                The curriculum is heavily skewed towards 1990s relational standards, 
+                lacking essential modern data engineering competencies.
+              </p>
+            </div>
 
-            <div className="flex justify-between items-start relative z-10">
+            {/* RIGHT: Metric Cards + Skills Bar Chart */}
+            <div className="col-span-8 flex flex-col gap-6">
+              
+              {/* 3 Metric Cards */}
+              <div className="grid grid-cols-3 gap-6">
+                <MetricCard 
+                  color="red"
+                  icon={<FileText size={14}/>}
+                  badge="Urgent Attention"
+                  value="12"
+                  title="Skill Gaps Identified"
+                  desc="Zero coverage of Document Stores, Key-Value pairs, or CAP Theorem."
+                />
+                <MetricCard 
+                  color="blue"
+                  icon={<History size={14}/>}
+                  badge="Recency Audit"
+                  value="65%"
+                  title="Outdated Content"
+                  desc="Excessive focus on manual normalization and legacy SQL dialects."
+                />
+                <MetricCard 
+                  color="blue"
+                  icon={<TrendingDown size={14}/>}
+                  badge="Benchmark"
+                  value="Low"
+                  title="Industry Match"
+                  desc="Bottom 10% performance compared to peer research institutions."
+                />
+              </div>
 
-              <div>
-                <span className="text-[10px] font-bold uppercase tracking-widest bg-white/20 px-3 py-1 rounded-full">
-                  Curriculum Audit v2.4
-                </span>
-
-                <h1 className="text-[28px] font-black mt-3 tracking-tight">
-                  {module.code} – {module.name} Analysis
-                </h1>
-
-                <p className="text-sm opacity-80 mt-2 max-w-[600px]">
-                  Deep intelligence analysis against global industry benchmarks and curriculum standards.
-                </p>
-
-                {/* SCORE */}
-                <div className="flex items-end gap-4 mt-6">
-                  <span className="text-[56px] font-black leading-none">
-                    {module.score}%
-                  </span>
-                  <span className="text-sm font-semibold opacity-80 mb-2">
-                    Alignment Score
-                  </span>
+              {/* Skill Alignment Bar Chart */}
+              <div className="flex-1 bg-white rounded-[32px] p-8 border border-white shadow-xl shadow-slate-200/40 flex flex-col justify-center">
+                <div className="flex justify-between items-center mb-6">
+                  <h3 className="text-[11px] font-black text-slate-500 uppercase tracking-widest">
+                    Skill Alignment By Industry Sector
+                  </h3>
+                  <div className="flex items-center gap-4 text-[10px] font-bold text-slate-500">
+                    <span className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-blue-600"></div> Current</span>
+                    <span className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-slate-200"></div> Market Need</span>
+                  </div>
                 </div>
 
-                {/* PROGRESS */}
-                <div className="mt-3 h-2 bg-white/20 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-white"
-                    style={{ width: `${module.score}%` }}
-                  />
+                <div className="space-y-6">
+                  <SkillBar label="Big Data & Scalability" value={24} />
+                  <SkillBar label="Cloud Infrastructure" value={31} />
+                  <SkillBar label="Real-time Stream Processing" value={18} />
                 </div>
               </div>
 
-              {/* ACTION */}
-              <div className="flex flex-col items-end gap-3">
-                <button 
-                onClick={() => navigate("/recommendations")}
-                className="px-5 py-3 bg-white text-slate-900 rounded-xl font-semibold shadow hover:scale-[1.02]">
-                  View AI Recommendations
-                </button>
-
-                <button
-                  onClick={() => navigate('/modules')}
-                  className="text-xs font-bold uppercase opacity-80 flex items-center gap-2"
-                >
-                  <ArrowLeft size={14}/> Back
-                </button>
-              </div>
             </div>
           </div>
 
-          {/* 🔥 KPI CARDS */}
-          <div className="grid grid-cols-4 gap-4">
-
-            <KPI title="Skill Gaps" value={module.gaps} danger />
-            <KPI title="Outdated Modules" value={module.outdated} />
-            <KPI title="Industry Match" value={`${module.match}%`} success />
-
-            {/* DONUT */}
-            <div className="bg-white rounded-2xl p-4 border shadow-sm flex flex-col items-center justify-center">
-              <Donut value={module.score} color={isCritical ? "#DC2626" : "#2563EB"} />
-              <p className="text-xs text-slate-400 mt-2">Overall Score</p>
-            </div>
-
-          </div>
-
-          {/* 🔥 MAIN GRID */}
-          <div className="grid grid-cols-12 gap-6">
-
-            {/* LEFT */}
-            <div className="col-span-8 space-y-6">
-
-              {/* INDUSTRY BARS */}
-              <div className="bg-white p-6 rounded-2xl border shadow-sm">
-                <h3 className="font-bold mb-4">Curriculum vs Industry</h3>
-
-                <Bar label="Software Development" value={isCritical ? 31 : 92}/>
-                <Bar label="Data Science & AI" value={isCritical ? 12 : 65}/>
-                <Bar label="Cloud Infrastructure" value={isCritical ? 24 : 74}/>
+          {/* BOTTOM GRID: FEEDBACK TILE (Left) + BENCHMARKING (Right) */}
+          <div className="grid grid-cols-12 gap-6 pb-6">
+            
+            {/* 🔥 NEW SINGLE TILE FEEDBACK SECTION 🔥 */}
+            <div className="col-span-8 bg-white rounded-[32px] p-8 border border-white shadow-xl shadow-slate-200/40 flex flex-col">
+              
+              {/* Unified Header */}
+              <div className="flex justify-between items-start mb-8">
+                <div>
+                  <h3 className="text-[22px] font-black text-slate-900 tracking-tight">Student Feedback Influence</h3>
+                  <p className="text-[13px] text-slate-500 font-medium mt-1">Frustration trends emerging from student internship placement data.</p>
+                </div>
+                <div className="bg-[#EFF6FF] text-blue-700 px-6 py-3 rounded-[20px] flex flex-col items-center justify-center border border-blue-100">
+                  <span className="text-[11px] font-bold mb-1">Positive Sentiment:</span>
+                  <span className="text-3xl font-black leading-none">38%</span>
+                </div>
               </div>
 
-              {/* FEEDBACK + WORD CLOUD */}
-              <div className="grid grid-cols-2 gap-6">
-
-                <div className="bg-white p-6 rounded-2xl border shadow-sm">
-                  <h3 className="font-bold mb-3">Student Feedback</h3>
-
-                  <p className={`text-lg font-bold ${
-                    isCritical ? "text-red-600" : "text-green-600"
-                  }`}>
-                    {isCritical ? "Mixed" : "Positive"}
-                  </p>
-
-                  <p className="text-sm text-slate-500 mt-2">
-                    “Curriculum needs more modern tools and real-world exposure.”
-                  </p>
+              {/* Inner Split Content */}
+              <div className="grid grid-cols-2 gap-6 flex-1">
+                
+                {/* Left: Verbatim Quotes */}
+                <div className="flex flex-col gap-5">
+                  {/* Quote 1 */}
+                  <div className="bg-white p-6 rounded-[24px] border border-slate-100 shadow-sm shadow-slate-100 flex-1 hover:border-red-100 transition-colors">
+                    <div className="flex items-center gap-2 mb-4 text-[#E11D48]">
+                      <ThumbsDown size={18} />
+                      <span className="text-[11px] font-black uppercase tracking-[2px]">Workplace Irrelevance</span>
+                    </div>
+                    <p className="text-[13px] text-slate-700 italic font-medium leading-relaxed">
+                      "Felt completely unprepared for my internship where they used MongoDB and DynamoDB exclusively."
+                    </p>
+                  </div>
+                  
+                  {/* Quote 2 */}
+                  <div className="bg-white p-6 rounded-[24px] border border-slate-100 shadow-sm shadow-slate-100 flex-1 hover:border-blue-100 transition-colors">
+                    <div className="flex items-center gap-2 mb-4 text-[#2563EB]">
+                      <Lightbulb size={18} />
+                      <span className="text-[11px] font-black uppercase tracking-[2px]">Requested Topics</span>
+                    </div>
+                    <p className="text-[13px] text-slate-700 italic font-medium leading-relaxed">
+                      "Needs more focus on how databases scale in the cloud rather than manual disk management."
+                    </p>
+                  </div>
                 </div>
 
-                <div className="bg-white p-6 rounded-2xl border shadow-sm">
-                  <h3 className="font-bold mb-3">Sentiment Overview</h3>
-
-                  <div className="flex flex-wrap gap-2 text-sm">
-                    <span className="bg-blue-100 px-3 py-1 rounded-full">Modern</span>
-                    <span className="bg-red-100 px-3 py-1 rounded-full">Outdated</span>
-                    <span className="bg-green-100 px-3 py-1 rounded-full">Practical</span>
-                    <span className="bg-yellow-100 px-3 py-1 rounded-full">Challenging</span>
+                {/* Right: Word Cloud Box */}
+                <div className="bg-white p-6 rounded-[24px] border border-slate-100 shadow-sm shadow-slate-100 flex flex-col items-center justify-center text-center hover:border-slate-200 transition-colors">
+                  <h4 className="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-8">Sentiment Word Cloud</h4>
+                  
+                  {/* Word Cloud Arrangement */}
+                  <div className="flex flex-wrap justify-center items-baseline gap-x-5 gap-y-3 px-4">
+                    <span className="text-4xl font-black text-[#CB4538] tracking-tight">Obsolete</span>
+                    <span className="text-2xl font-black text-[#5C8AE8] tracking-tight">Outdated</span>
+                    <span className="text-3xl font-black text-[#1F2937] tracking-tight">Rigid</span>
+                    <span className="text-base font-bold text-[#6B7280]">Theoretical</span>
+                    <span className="text-xl font-bold text-[#9CA3AF]">Limited</span>
+                    <span className="text-lg font-black text-[#ED746A]">Frustrating</span>
                   </div>
                 </div>
 
               </div>
-
             </div>
 
-            {/* RIGHT */}
-            <div className="col-span-4 space-y-6">
+            {/* BENCHMARKING SECTION (Right Sidebar) */}
+            <div className="col-span-4 bg-[#E2E8F0] rounded-[32px] p-8 flex flex-col shadow-inner">
+              <h3 className="text-[11px] font-black text-slate-600 uppercase tracking-widest mb-8">Internal Peer Benchmarking</h3>
+              
+              <div className="space-y-8 flex-1">
+                <div className="flex items-center gap-5 bg-white/50 p-4 rounded-[20px] backdrop-blur-sm">
+                  <div className="w-12 h-12 bg-white rounded-[16px] flex items-center justify-center text-red-500 shadow-sm">
+                    <TrendingDown size={22} />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">vs Department Avg</p>
+                    <p className="text-2xl font-black text-red-600 leading-none">22% Lower</p>
+                  </div>
+                </div>
 
-              {/* INSIGHTS */}
-              <div className="bg-white p-6 rounded-2xl border shadow-sm">
-                <h3 className="font-bold mb-4">Critical Insights</h3>
-
-                <Insight
-                  title="Outdated Stack"
-                  text="Core modules rely on deprecated technologies"
-                  danger
-                />
-
-                <Insight
-                  title="Skill Gap"
-                  text="Cloud & distributed systems missing"
-                />
-
-                <Insight
-                  title="Opportunity"
-                  text="Add AI & MLOps modules"
-                />
+                <div className="flex items-center gap-5 bg-white/50 p-4 rounded-[20px] backdrop-blur-sm">
+                  <div className="w-12 h-12 bg-white rounded-[16px] flex items-center justify-center text-orange-500 shadow-sm">
+                    <AlertTriangle size={22} />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Student Engagement</p>
+                    <p className="text-xl font-black text-orange-600 leading-none">Bottom Tier</p>
+                  </div>
+                </div>
               </div>
 
-              {/* FINAL CTA */}
-              <div className="bg-gradient-to-br from-slate-900 to-slate-800 text-white p-6 rounded-2xl">
-                <h3 className="text-sm opacity-70 mb-2">FINAL ACTION</h3>
-
-                <p className="text-sm mb-4">
-                  {isCritical
-                    ? "Immediate intervention required to fix curriculum gaps."
-                    : "Minor improvements recommended."}
-                </p>
-
-                <button className="w-full py-3 bg-blue-600 rounded-xl font-semibold flex items-center justify-center gap-2">
-                  Launch Fix Plan <ChevronRight size={14}/>
-                </button>
+              <div className="mt-8 pt-6 border-t border-slate-300">
+                <p className="text-[10px] font-bold text-slate-500 mb-4">Module historical performance trend</p>
+                <div className="flex items-end gap-2 h-16">
+                  <div className="flex-1 bg-blue-400/80 rounded-t-md h-full hover:bg-blue-500 transition-colors cursor-pointer"></div>
+                  <div className="flex-1 bg-blue-500/80 rounded-t-md h-[60%] hover:bg-blue-600 transition-colors cursor-pointer"></div>
+                  <div className="flex-1 bg-blue-700/90 rounded-t-md h-[25%] hover:bg-blue-800 transition-colors cursor-pointer"></div>
+                </div>
               </div>
-
             </div>
 
           </div>
@@ -206,31 +237,35 @@ export default function AnalysisDetail() {
   );
 }
 
-/* COMPONENTS */
+/* --- SUB-COMPONENTS --- */
 
-function KPI({ title, value, danger, success }) {
+function MetricCard({ color, icon, badge, value, title, desc }) {
+  const isRed = color === "red";
+  
   return (
-    <div className="bg-white p-5 rounded-xl border shadow-sm">
-      <p className="text-xs text-slate-400">{title}</p>
-      <p className={`text-xl font-bold mt-1 ${
-        danger ? "text-red-600" : success ? "text-green-600" : ""
-      }`}>
-        {value}
+    <div className={`bg-white rounded-[24px] p-6 shadow-xl shadow-slate-200/40 border-y border-r border-slate-100 border-l-4 ${isRed ? 'border-l-[#E11D48]' : 'border-l-[#2563EB]'} flex flex-col group hover:-translate-y-1 transition-transform`}>
+      <div className={`flex items-center gap-2 text-[9px] font-black uppercase tracking-widest mb-4 ${isRed ? 'text-[#E11D48]' : 'text-[#2563EB]'}`}>
+        {icon} {badge}
+      </div>
+      <div className="text-4xl font-black text-slate-900 mb-2 tracking-tighter">{value}</div>
+      <div className="text-[13px] font-bold text-slate-800 mb-3">{title}</div>
+      <p className="text-[11px] text-slate-500 font-medium leading-relaxed mt-auto">
+        {desc}
       </p>
     </div>
   );
 }
 
-function Bar({ label, value }) {
+function SkillBar({ label, value }) {
   return (
-    <div className="mb-3">
-      <div className="flex justify-between text-xs mb-1">
+    <div>
+      <div className="flex justify-between text-[12px] font-bold text-slate-700 mb-2">
         <span>{label}</span>
-        <span>{value}%</span>
+        <span className="text-[#2563EB]">{value}% Match</span>
       </div>
-      <div className="h-2 bg-slate-200 rounded-full">
-        <div
-          className="h-2 bg-blue-600 rounded-full"
+      <div className="h-3.5 bg-slate-100 rounded-full relative overflow-hidden">
+        <div 
+          className="absolute top-0 left-0 h-full bg-[#2563EB] rounded-full transition-all duration-1000 ease-out"
           style={{ width: `${value}%` }}
         />
       </div>
@@ -238,60 +273,46 @@ function Bar({ label, value }) {
   );
 }
 
-function Insight({ title, text, danger }) {
-  return (
-    <div className={`p-3 rounded-lg mb-2 ${
-      danger ? "bg-red-50 border border-red-200" : "bg-slate-50"
-    }`}>
-      <p className={`text-sm font-semibold ${
-        danger ? "text-red-600" : ""
-      }`}>
-        {title}
-      </p>
-      <p className="text-xs text-slate-500">{text}</p>
-    </div>
-  );
-}
-
-/* DONUT */
-function Donut({ value, color }) {
-  const radius = 50;
-  const stroke = 10;
+function Donut({ value }) {
+  const radius = 65;
+  const stroke = 16;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (value / 100) * circumference;
 
   return (
-    <svg width="120" height="120">
-      <circle
-        stroke="#E2E8F0"
-        fill="transparent"
-        strokeWidth={stroke}
-        r={radius}
-        cx="60"
-        cy="60"
-      />
-      <circle
-        stroke={color}
-        fill="transparent"
-        strokeWidth={stroke}
-        strokeDasharray={circumference}
-        strokeDashoffset={offset}
-        r={radius}
-        cx="60"
-        cy="60"
-        strokeLinecap="round"
-      />
-      <text
-        x="50%"
-        y="50%"
-        textAnchor="middle"
-        dy=".3em"
-        fontSize="18"
-        fontWeight="bold"
-        fill={color}
-      >
-        {value}%
-      </text>
-    </svg>
+    <div className="relative w-56 h-56 flex items-center justify-center">
+  <svg width="224" height="224" className="transform -rotate-90 drop-shadow-sm">
+    <circle
+      stroke="#F1F5F9"
+      fill="transparent"
+      strokeWidth={8}
+      r={88}
+      cx="112"
+      cy="112"
+    />
+    <circle
+      stroke="#E11D48"
+      fill="transparent"
+      strokeWidth={8}
+      strokeDasharray={2 * Math.PI * 88}
+      strokeDashoffset={offset}
+      r={88}
+      cx="112"
+      cy="112"
+      strokeLinecap="round"
+      className="transition-all duration-1000 ease-out"
+    />
+  </svg>
+
+  <div className="absolute inset-0 flex flex-col items-center justify-center">
+    <span className="text-[60px] font-black text-slate-800 tracking-tighter leading-none">
+      {value}%
+    </span>
+
+    <span className="text-[10px] font-black text-[#E11D48] uppercase tracking-widest mt-2 bg-red-50 px-2 py-1 rounded-md">
+      Critical Gap
+    </span>
+  </div>
+</div>
   );
 }

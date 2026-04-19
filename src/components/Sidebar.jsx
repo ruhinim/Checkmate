@@ -1,9 +1,19 @@
 import React, { useState } from 'react';
 import { NavLink } from "react-router-dom";
-import { 
-  LayoutDashboard, Book, BarChart3, Sparkles, 
-  MessageCircle, Newspaper, Globe, Plus, 
-  Users, Shield, MessageSquare, Crown, ChevronDown 
+import {
+  LayoutDashboard,
+  Book,
+  BarChart3,
+  Sparkles,
+  MessageCircle,
+  Newspaper,
+  Globe,
+  Plus,
+  Users,
+  Shield,
+  MessageSquare,
+  Crown,
+  ChevronDown
 } from "lucide-react";
 
 export default function Sidebar() {
@@ -39,8 +49,11 @@ export default function Sidebar() {
           <div className="w-10 h-10 bg-[#2563eb] text-white flex items-center justify-center rounded-xl shadow-lg shadow-blue-200">
             <Crown size={20} />
           </div>
+
           <div className="flex flex-col">
-            <span className="font-extrabold text-[#0F172A] text-[18px]">CheckMate</span>
+            <span className="font-extrabold text-[#0F172A] text-[18px]">
+              CheckMate
+            </span>
             <span className="text-[9px] font-black text-slate-400 tracking-[1.5px] uppercase">
               Academic Intelligence
             </span>
@@ -48,39 +61,62 @@ export default function Sidebar() {
         </div>
 
         <nav className="space-y-1">
-          {/* Main Navigation Group */}
+          {/* Main Navigation */}
           {mainMenuItems.map((item, idx) => (
-            <NavLink 
-              key={idx} 
+            <NavLink
+              key={idx}
               to={item.path}
-              className={({ isActive }) => `flex items-center gap-4 px-4 py-3 rounded-xl transition-all relative ${isActive ? activeClass : inactiveClass}`}
+              className={({ isActive }) =>
+                `flex items-center gap-4 px-4 py-3 rounded-xl transition-all ${isActive ? activeClass : inactiveClass}`
+              }
             >
               <span>{item.icon}</span>
               <span className="text-[13px]">{item.label}</span>
             </NavLink>
           ))}
 
-          {/* Newsletter Dropdown Group */}
+          {/* Newsletter Section */}
           <div className="pt-1">
-            <button 
+            <div
               onClick={() => setIsNewsletterOpen(!isNewsletterOpen)}
-              className={`w-full flex items-center gap-4 px-4 py-3 rounded-xl transition-all ${inactiveClass}`}
+              className={`w-full flex items-center gap-4 px-4 py-3 rounded-xl transition-all cursor-pointer ${inactiveClass}`}
             >
-              <Newspaper size={18} />
-              <span className="text-[13px]">Newsletter</span>
-              <ChevronDown 
-                size={14} 
-                className={`ml-auto transition-transform duration-200 ${isNewsletterOpen ? 'rotate-180' : ''}`} 
-              />
-            </button>
+              <NavLink
+                to="/newsletter"
+                className="flex items-center gap-4 flex-1"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <Newspaper size={18} />
+                <span className="text-[13px]">Newsletter</span>
+              </NavLink>
 
-            {/* Dropdown Content */}
-            <div className={`overflow-hidden transition-all duration-300 ${isNewsletterOpen ? 'max-h-40 opacity-100 mt-1' : 'max-h-0 opacity-0'}`}>
+              <ChevronDown
+                size={14}
+                className={`transition-transform duration-200 ${
+                  isNewsletterOpen ? "rotate-180" : ""
+                }`}
+              />
+            </div>
+
+            {/* Dropdown Items */}
+            <div
+              className={`overflow-hidden transition-all duration-300 ${
+                isNewsletterOpen
+                  ? "max-h-40 opacity-100 mt-1"
+                  : "max-h-0 opacity-0"
+              }`}
+            >
               {newsletterSubItems.map((subItem, idx) => (
-                <NavLink 
-                  key={idx} 
+                <NavLink
+                  key={idx}
                   to={subItem.path}
-                  className={({ isActive }) => `flex items-center gap-4 pl-12 pr-4 py-2.5 rounded-xl text-[12px] transition-all ${isActive ? 'text-[#2563EB] font-bold' : 'text-slate-400 hover:text-slate-600'}`}
+                  className={({ isActive }) =>
+                    `flex items-center gap-4 pl-12 pr-4 py-2.5 rounded-xl text-[12px] transition-all ${
+                      isActive
+                        ? "text-[#2563EB] font-bold"
+                        : "text-slate-400 hover:text-slate-600"
+                    }`
+                  }
                 >
                   <span>{subItem.icon}</span>
                   <span>{subItem.label}</span>
@@ -89,13 +125,15 @@ export default function Sidebar() {
             </div>
           </div>
 
-          {/* Bottom Navigation Group */}
+          {/* Bottom Navigation */}
           <div className="pt-1">
             {bottomMenuItems.map((item, idx) => (
-              <NavLink 
-                key={idx} 
+              <NavLink
+                key={idx}
                 to={item.path}
-                className={({ isActive }) => `flex items-center gap-4 px-4 py-3 rounded-xl transition-all relative ${isActive ? activeClass : inactiveClass}`}
+                className={({ isActive }) =>
+                  `flex items-center gap-4 px-4 py-3 rounded-xl transition-all ${isActive ? activeClass : inactiveClass}`
+                }
               >
                 <span>{item.icon}</span>
                 <span className="text-[13px]">{item.label}</span>
@@ -105,7 +143,7 @@ export default function Sidebar() {
         </nav>
       </div>
 
-      {/* AI ASSISTANT */}
+      {/* AI Assistant */}
       <div className="px-2 mt-6">
         <div className="flex items-center justify-between px-4 py-3 rounded-xl bg-slate-50 hover:bg-white border border-slate-200 hover:shadow-md transition-all cursor-pointer">
           <div className="flex items-center gap-3">
@@ -115,11 +153,15 @@ export default function Sidebar() {
               </div>
               <div className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-green-500 rounded-full border border-white"></div>
             </div>
+
             <div>
-              <p className="text-[12px] font-semibold text-slate-800">AI Assistant</p>
+              <p className="text-[12px] font-semibold text-slate-800">
+                AI Assistant
+              </p>
               <p className="text-[10px] text-slate-500">Ready to help</p>
             </div>
           </div>
+
           <span className="text-[11px] font-medium text-[#2563eb]">Open</span>
         </div>
       </div>
